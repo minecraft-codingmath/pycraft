@@ -5,11 +5,13 @@
 from __future__ import division
 
 import defs
+import model
 
 from helper import *
 from model import Model
 from pyglet.gl import *
 from window import Window
+
 
 def setup_fog():
     """ Configure the OpenGL fog properties.
@@ -51,10 +53,12 @@ def setup():
 
 def main():
     window = Window(width=800, height=600, caption='Pyglet', resizable=True)
+    window.model.add_block((1, 1, 1), defs.GRASS) # add block
     # Hide the mouse cursor and prevent the mouse from leaving the window.
     window.set_exclusive_mouse(True)
     setup()
     pyglet.app.run()
+
 
 
 if __name__ == '__main__':
