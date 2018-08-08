@@ -59,26 +59,6 @@ class Model(object):
                     for dy in range(-2, 3):
                         self.add_block((x, y + dy, z), defs.STONE, immediate=False)
 
-        # generate the hills randomly
-        o = n - 10
-        for _ in range(120):
-            a = random.randint(-o, o)  # x position of the hill
-            b = random.randint(-o, o)  # z position of the hill
-            c = -1  # base of the hill
-            h = random.randint(1, 6)  # height of the hill
-            s = random.randint(4, 8)  # 2 * s is the side length of the hill
-            d = 1  # how quickly to taper off the hills
-            t = random.choice([defs.GRASS, defs.SAND, defs.BRICK])
-            for y in range(c, c + h):
-                for x in range(a - s, a + s + 1):
-                    for z in range(b - s, b + s + 1):
-                        if (x - a) ** 2 + (z - b) ** 2 > (s + 1) ** 2:
-                            continue
-                        if (x - 0) ** 2 + (z - 0) ** 2 < 5 ** 2:
-                            continue
-                        self.add_block((x, y, z), t, immediate=False)
-                s -= d  # decrement side lenth so hills taper off
-
     def hit_test(self, position, vector, max_distance=8):
         """ Line of sight search from current position. If a block is
         intersected it is returned, along with the block previously in the line
