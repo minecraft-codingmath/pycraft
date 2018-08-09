@@ -1,7 +1,9 @@
 import math
 import defs
 import pyglet
+import queue
 
+from api_handler import APIHandlerThread
 from helper import cube_vertices, normalize, sectorize
 from pyglet.window import key, mouse
 from pyglet.gl import *
@@ -69,6 +71,12 @@ class Window(pyglet.window.Window):
         # This call schedules the `update()` method to be called
         # TICKS_PER_SEC. This is the main game event loop.
         pyglet.clock.schedule_interval(self.update, 1.0 / defs.TICKS_PER_SEC)
+
+        # The API hanler to handle api calls.
+        self.msg_queue = queue.Queue()
+        self.api_handler_thread = APIHandlerThread(self.msg_queue)
+        self.api_handler_thread.daemon = True
+        self.api_handler_thread.start()
 
     def set_exclusive_mouse(self, exclusive):
         """ If `exclusive` is True, the game will capture the mouse, if False
@@ -184,6 +192,14 @@ class Window(pyglet.window.Window):
         x, y, z = self.position
         x, y, z = self.collide((x + dx, y + dy, z + dz), defs.PLAYER_HEIGHT)
         self.position = (x, y, z)
+        # api handling
+        # TODO: use msgpack
+        try:
+            last_api_call = self.msg_queue.get_nowait()
+            x, y, z = [int(n) for n in last_api_call.split()]
+            self.model.add_block((x, y, z), defs.BRICK)
+        except queue.Empty:
+            pass
 
     def collide(self, position, height):
         """ Checks to see if the player at the given `position` and `height`
