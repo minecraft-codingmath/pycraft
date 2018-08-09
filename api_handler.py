@@ -3,9 +3,11 @@ API handler module
 
 """
 
+
 from threading import Thread
 import queue
 import zmq
+
 
 class APIHandlerThread(Thread):
     """APIHandler class"""
@@ -19,11 +21,13 @@ class APIHandlerThread(Thread):
         Thread.__init__(self)
         self.msg_queue = msg_queue
 
+
     def run(self):
         """
         run() method -- handles API requests
 
-        More specifically, it reads api 'calls' from zmq and feed it to msg_queue.
+        More specifically, it reads api 'calls' from zmq and feed it to
+        msg_queue.
         The api 'calls' are simply byte arrays encoded with utf-8, for now.
         It will be changed to msgpack-compressed json objects.
         """
@@ -44,7 +48,8 @@ class APIHandlerThread(Thread):
             try:
                 message_str = message.decode('utf-8')
             except UnicodeDecodeError:
-                print('error: unicode decoding failed. skipping this api call.')
+                print(
+                    'error: unicode decoding failed. skipping this api call.')
                 continue
 
             self.msg_queue.put_nowait(message_str)
