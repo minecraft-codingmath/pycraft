@@ -43,7 +43,6 @@ class APIHandlerThread(Thread):
 
             try:
                 message_str = message.decode('utf-8')
-                print('got message {0}'.format(message_str))
             except UnicodeDecodeError:
                 print('error: unicode decoding failed. skipping this api call.')
                 continue
