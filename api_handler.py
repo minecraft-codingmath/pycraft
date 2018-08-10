@@ -32,7 +32,7 @@ class APIHandlerThread(Thread):
         It will be changed to msgpack-compressed json objects.
         """
         context = zmq.Context()
-        socket = context.socket(zmq.REP)
+        socket = context.socket(zmq.PULL)
         # TODO: allow users to customize port
         socket.bind('tcp://*:1234')
         print('api handler thread started')
@@ -43,7 +43,7 @@ class APIHandlerThread(Thread):
                 message = socket.recv()
             except zmq.error.ZMQError:
                 # FIXME: doesn't seem to be right
-                pass
+                continue
 
             try:
                 message_str = message.decode('utf-8')
