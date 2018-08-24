@@ -131,12 +131,15 @@ class Model(object):
             Whether or not to immediately remove block from canvas.
 
         """
-        del self.world[position]
-        self.sectors[sectorize(position)].remove(position)
-        if immediate:
-            if position in self.shown:
-                self.hide_block(position)
-            self.check_neighbors(position)
+        try:
+            del self.world[position]
+            self.sectors[sectorize(position)].remove(position)
+            if immediate:
+                if position in self.shown:
+                    self.hide_block(position)
+                self.check_neighbors(position)
+        except KeyError:
+            pass
 
     def check_neighbors(self, position):
         """ Check all blocks surrounding `position` and ensure their visual

@@ -229,6 +229,7 @@ class Window(pyglet.window.Window):
         Arguments (in dict):
         position -- the position of the block
         """
+        self.model.remove_block(tuple(args['position']))
 
     def collide(self, position, height):
         """ Checks to see if the player at the given `position` and `height`
