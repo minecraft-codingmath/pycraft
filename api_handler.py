@@ -7,7 +7,6 @@ API handler module
 from threading import Thread
 
 import msgpack
-import queue
 import zmq
 
 
@@ -40,7 +39,6 @@ class APIHandlerThread(Thread):
         print('api handler thread started')
 
         while True:
-            # TODO: use msgpack
             try:
                 message = socket.recv()
             except zmq.error.ZMQError:

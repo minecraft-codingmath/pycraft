@@ -212,15 +212,23 @@ class Window(pyglet.window.Window):
 
     def api_add_block(self, args):
         """
-        add_block() method -- adds block with specified texture in specified
-        position.
+        api_add_block() method -- adds block with specified texture in a
+        specified position.
 
-        Arguments:
+        Arguments (in dict):
         position -- the position of the block
         texture -- the texture of the block
         """
         self.model.add_block(tuple(args['position']),
                              defs.TEXTURE_DICT[args['texture']])
+
+    def api_delete_block(self, args):
+        """
+        api_delete_block() method -- deletes block in a specified position.
+
+        Arguments (in dict):
+        position -- the position of the block
+        """
 
     def collide(self, position, height):
         """ Checks to see if the player at the given `position` and `height`
