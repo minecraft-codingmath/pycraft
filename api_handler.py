@@ -5,6 +5,8 @@ API handler module
 
 
 from threading import Thread
+
+import msgpack
 import queue
 import zmq
 
@@ -45,11 +47,5 @@ class APIHandlerThread(Thread):
                 # FIXME: doesn't seem to be right
                 continue
 
-            try:
-                message_str = message.decode('utf-8')
-            except UnicodeDecodeError:
-                print(
-                    'error: unicode decoding failed. skipping this api call.')
-                continue
-
-            self.msg_queue.put_nowait(message_str)
+            command = msgpack.unpackb(message, raw=False)
+            self.msg_queue.put_nowait(command)

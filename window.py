@@ -167,6 +167,7 @@ class Window(pyglet.window.Window):
     def _update(self, dt):
         """ Private implementation of the `update()` method. This is where most
         of the motion logic lives, along with gravity and collision detection.
+        The API handling is done here, too.
 
         Parameters
         ----------
@@ -193,13 +194,33 @@ class Window(pyglet.window.Window):
         x, y, z = self.collide((x + dx, y + dy, z + dz), defs.PLAYER_HEIGHT)
         self.position = (x, y, z)
         # api handling
-        # TODO: use msgpack
         try:
             last_api_call = self.msg_queue.get_nowait()
-            x, y, z = [int(n) for n in last_api_call.split()]
-            self.model.add_block((x, y, z), defs.BRICK)
+            self.handle_api_call(last_api_call)
         except queue.Empty:
             pass
+
+    def handle_api_call(self, api_call):
+        """
+        handle_api_call() method -- handles api request wrapped with dict
+
+        Arguments:
+        api_call -- the dict that has the api call
+        """
+        api_method = getattr(self, 'api_{0}'.format(api_call['cmd']))
+        api_method(api_call['args'])
+
+    def api_add_block(self, args):
+        """
+        add_block() method -- adds block with specified texture in specified
+        position.
+
+        Arguments:
+        position -- the position of the block
+        texture -- the texture of the block
+        """
+        self.model.add_block(tuple(args['position']),
+                             defs.TEXTURE_DICT[args['texture']])
 
     def collide(self, position, height):
         """ Checks to see if the player at the given `position` and `height`
