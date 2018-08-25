@@ -2,18 +2,20 @@
 
 """
 
-import defs
-import pyglet
-import random
 import time
-
 from collections import deque
 from pyglet import image
 from pyglet.graphics import TextureGroup
 from pyglet.gl import *
+import defs
+
 from helper import cube_vertices, sectorize, normalize
 
-class Model(object):
+
+class Model:
+    """
+    Model class -- stores info about pycraft world
+    """
 
     def __init__(self):
 
@@ -57,7 +59,8 @@ class Model(object):
                 if x in (-n, n) or z in (-n, n):
                     # create outer walls.
                     for dy in range(-2, 3):
-                        self.add_block((x, y + dy, z), defs.STONE, immediate=False)
+                        self.add_block(
+                            (x, y + dy, z), defs.STONE, immediate=False)
 
     def hit_test(self, position, vector, max_distance=8):
         """ Line of sight search from current position. If a block is
@@ -197,8 +200,8 @@ class Model(object):
         # create vertex list
         # FIXME Maybe `add_indexed()` should be used instead
         self._shown[position] = self.batch.add(24, GL_QUADS, self.group,
-            ('v3f/static', vertex_data),
-            ('t2f/static', texture_data))
+                                               ('v3f/static', vertex_data),
+                                               ('t2f/static', texture_data))
 
     def hide_block(self, position, immediate=True):
         """ Hide the block at the given `position`. Hiding does not remove the
