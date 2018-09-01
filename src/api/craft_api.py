@@ -6,7 +6,6 @@ craft_api.py -- The pycraft API
 
 import msgpack
 import zmq
-from deprecated import deprecated
 
 
 class CraftAPI:
