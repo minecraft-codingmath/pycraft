@@ -5,10 +5,7 @@
 from __future__ import division
 
 import defs
-import model
-
 from helper import *
-from model import Model
 from pyglet.gl import *
 from window import Window
 
@@ -23,7 +20,7 @@ def setup_fog():
     # Set the fog color.
     glFogfv(GL_FOG_COLOR, (GLfloat * 4)(0.5, 0.69, 1.0, 1))
     # Say we have no preference between rendering speed and quality.
-    glHint(GL_FOG_HINT, GL_DONT_CARE)
+    glHint(GL_FOG_HINT, GL_FASTEST)
     # Specify the equation used to compute the blending factor.
     glFogi(GL_FOG_MODE, GL_LINEAR)
     # How close and far away fog starts and ends. The closer the start and end,
@@ -52,6 +49,9 @@ def setup():
 
 
 def main():
+    """ The main function
+
+    """
     window = Window(width=800, height=600, caption='Pyglet', resizable=True)
     window.model.add_block((1, 1, 1), defs.GRASS) # add block
     # While loop
