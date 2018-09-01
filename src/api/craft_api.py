@@ -23,17 +23,6 @@ class CraftAPI:
         self.socket.connect('tcp://localhost:1234')
 
 
-    @deprecated
-    def add_brick_block(self, position):
-        """
-        add_brick_block -- add a brick block to a given position
-
-        Arguments:
-        position -- the position of the block
-        """
-        self.socket.send(' '.join(repr(n) for n in position).encode('utf-8'))
-
-
     def add_block(self, position, texture):
         """
         add_block -- add a block with specified texture to a given position
