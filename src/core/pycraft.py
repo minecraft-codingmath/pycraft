@@ -6,7 +6,7 @@ from __future__ import division
 
 import defs
 from helper import *
-from pyglet.gl import *
+from PyQt5.QtOpenGL import *
 from window import Window
 
 
