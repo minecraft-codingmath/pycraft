@@ -19,7 +19,7 @@ def setup_fog():
     glEnable(GL_FOG)
     # Set the fog color.
     glFogfv(GL_FOG_COLOR, (GLfloat * 4)(0.5, 0.69, 1.0, 1))
-    # Say we have no preference between rendering speed and quality.
+    # Use the fastest randering.
     glHint(GL_FOG_HINT, GL_FASTEST)
     # Specify the equation used to compute the blending factor.
     glFogi(GL_FOG_MODE, GL_LINEAR)
