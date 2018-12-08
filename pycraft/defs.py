@@ -3,6 +3,7 @@
 """
 
 import math
+import os
 from helper import tex_coords
 
 TICKS_PER_SEC = 60
@@ -26,7 +27,8 @@ TERMINAL_VELOCITY = 50
 
 PLAYER_HEIGHT = 2
 
-TEXTURE_PATH = 'texture.png'
+TEXTURE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                            'texture.png')
 
 GRASS = tex_coords((1, 0), (0, 1), (0, 0))
 SAND = tex_coords((1, 1), (1, 1), (1, 1))
