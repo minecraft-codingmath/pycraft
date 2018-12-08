@@ -1,13 +1,14 @@
 import math
-import defs
 import pyglet
 import queue
 
-from api_handler import APIHandlerThread
-from helper import cube_vertices, normalize, sectorize
 from pyglet.window import key, mouse
 from pyglet.gl import *
-from model import Model
+
+from pycraft.api_handler import APIHandlerThread
+from pycraft.helper import cube_vertices, normalize, sectorize
+from pycraft.model import Model
+from pycraft.defs import *
 
 class Window(pyglet.window.Window):
 
@@ -50,7 +51,7 @@ class Window(pyglet.window.Window):
         self.dy = 0
 
         # A list of blocks the player can place. Hit num keys to cycle.
-        self.inventory = [defs.BRICK, defs.GRASS, defs.SAND]
+        self.inventory = [BRICK, GRASS, SAND]
 
         # The current block the user can place. Hit num keys to cycle.
         self.block = self.inventory[0]
@@ -70,7 +71,7 @@ class Window(pyglet.window.Window):
 
         # This call schedules the `update()` method to be called
         # TICKS_PER_SEC. This is the main game event loop.
-        pyglet.clock.schedule_interval(self.update, 1.0 / defs.TICKS_PER_SEC)
+        pyglet.clock.schedule_interval(self.update, 1.0 / TICKS_PER_SEC)
 
         # The API hanler to handle api calls.
         self.msg_queue = queue.Queue()
@@ -176,7 +177,7 @@ class Window(pyglet.window.Window):
 
         """
         # walking
-        speed = defs.FLYING_SPEED if self.flying else defs.WALKING_SPEED
+        speed = FLYING_SPEED if self.flying else WALKING_SPEED
         d = dt * speed # distance covered this tick.
         dx, dy, dz = self.get_motion_vector()
         # New position in space, before accounting for gravity.
@@ -186,12 +187,12 @@ class Window(pyglet.window.Window):
             # Update your vertical speed: if you are falling, speed up until you
             # hit terminal velocity; if you are jumping, slow down until you
             # start falling.
-            self.dy -= dt * defs.GRAVITY
-            self.dy = max(self.dy, -defs.TERMINAL_VELOCITY)
+            self.dy -= dt * GRAVITY
+            self.dy = max(self.dy, -TERMINAL_VELOCITY)
             dy += self.dy * dt
         # collisions
         x, y, z = self.position
-        x, y, z = self.collide((x + dx, y + dy, z + dz), defs.PLAYER_HEIGHT)
+        x, y, z = self.collide((x + dx, y + dy, z + dz), PLAYER_HEIGHT)
         self.position = (x, y, z)
         # api handling
         try:
@@ -220,7 +221,7 @@ class Window(pyglet.window.Window):
         texture -- the texture of the block
         """
         self.model.add_block(tuple(args['position']),
-                             defs.TEXTURE_DICT[args['texture']])
+                             TEXTURE_DICT[args['texture']])
 
     def api_delete_block(self, args):
         """
@@ -255,7 +256,7 @@ class Window(pyglet.window.Window):
         pad = 0.25
         p = list(position)
         np = normalize(position)
-        for face in defs.FACES:  # check all surrounding blocks
+        for face in FACES:  # check all surrounding blocks
             for i in range(3):  # check each dimension independently
                 if not face[i]:
                     continue
@@ -304,7 +305,7 @@ class Window(pyglet.window.Window):
                     self.model.add_block(previous, self.block)
             elif button == pyglet.window.mouse.LEFT and block:
                 texture = self.model.world[block]
-                if texture != defs.STONE:
+                if texture != STONE:
                     self.model.remove_block(block)
         else:
             self.set_exclusive_mouse(True)
@@ -350,7 +351,7 @@ class Window(pyglet.window.Window):
             self.strafe[1] += 1
         elif symbol == key.SPACE:
             if self.dy == 0:
-                self.dy = defs.JUMP_SPEED
+                self.dy = JUMP_SPEED
         elif symbol == key.ESCAPE:
             self.set_exclusive_mouse(False)
         elif symbol == key.TAB:

@@ -7,9 +7,9 @@ from collections import deque
 from pyglet import image
 from pyglet.graphics import TextureGroup
 from pyglet.gl import *
-import defs
 
-from helper import cube_vertices, sectorize, normalize
+from pycraft.defs import *
+from pycraft.helper import cube_vertices, sectorize, normalize
 
 
 class Model:
@@ -23,7 +23,7 @@ class Model:
         self.batch = pyglet.graphics.Batch()
 
         # A TextureGroup manages an OpenGL texture.
-        self.group = TextureGroup(image.load(defs.TEXTURE_PATH).get_texture())
+        self.group = TextureGroup(image.load(TEXTURE_PATH).get_texture())
 
         # A mapping from position to the texture of the block at that position.
         # This defines all the blocks that are currently in the world.
@@ -54,13 +54,13 @@ class Model:
         for x in range(-n, n + 1, s):
             for z in range(-n, n + 1, s):
                 # create a layer stone an grass everywhere.
-                self.add_block((x, y - 2, z), defs.GRASS, immediate=False)
-                self.add_block((x, y - 3, z), defs.STONE, immediate=False)
+                self.add_block((x, y - 2, z), GRASS, immediate=False)
+                self.add_block((x, y - 3, z), STONE, immediate=False)
                 if x in (-n, n) or z in (-n, n):
                     # create outer walls.
                     for dy in range(-2, 3):
                         self.add_block(
-                            (x, y + dy, z), defs.STONE, immediate=False)
+                            (x, y + dy, z), STONE, immediate=False)
 
     def hit_test(self, position, vector, max_distance=8):
         """ Line of sight search from current position. If a block is
@@ -95,7 +95,7 @@ class Model:
 
         """
         x, y, z = position
-        for dx, dy, dz in defs.FACES:
+        for dx, dy, dz in FACES:
             if (x + dx, y + dy, z + dz) not in self.world:
                 return True
         return False
@@ -152,7 +152,7 @@ class Model:
 
         """
         x, y, z = position
-        for dx, dy, dz in defs.FACES:
+        for dx, dy, dz in FACES:
             key = (x + dx, y + dy, z + dz)
             if key not in self.world:
                 continue
@@ -293,7 +293,7 @@ class Model:
 
         """
         start = time.clock()
-        while self.queue and time.clock() - start < 1.0 / defs.TICKS_PER_SEC:
+        while self.queue and time.clock() - start < 1.0 / TICKS_PER_SEC:
             self._dequeue()
 
     def process_entire_queue(self):

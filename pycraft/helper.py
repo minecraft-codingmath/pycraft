@@ -2,8 +2,6 @@
 
 """
 
-import defs
-
 def cube_vertices(x, y, z, n):
     """ Return the vertices of the cube at position x, y, z with size 2*n.
 
@@ -70,5 +68,7 @@ def sectorize(position):
 
     """
     x, y, z = normalize(position)
-    x, y, z = x // defs.SECTOR_SIZE, y // defs.SECTOR_SIZE, z // defs.SECTOR_SIZE
+    from pycraft.defs import SECTOR_SIZE
+    x, y, z = x // SECTOR_SIZE, y // SECTOR_SIZE, z // SECTOR_SIZE
+    del SECTOR_SIZE
     return (x, 0, z)

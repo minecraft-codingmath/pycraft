@@ -4,7 +4,7 @@
 
 import math
 import os
-from helper import tex_coords
+from pycraft.helper import tex_coords
 
 TICKS_PER_SEC = 60
 

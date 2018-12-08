@@ -4,10 +4,9 @@
 
 from __future__ import division
 
-import defs
-from helper import *
 from pyglet.gl import *
-from window import Window
+from pycraft.helper import *
+from pycraft.window import Window
 
 
 def setup_fog():
