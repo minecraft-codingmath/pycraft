@@ -1,0 +1,25 @@
+# Site settings
+title: Pycraft
+email: loop.infinitely@gmail.com
+description: >- # this means to ignore newlines until "baseurl:"
+  The official website of Pycraft team.
+baseurl: "/pycraft-snu" # the subpath of your site, e.g. /blog
+github_username: minecraft-codingmath
+
+# Build settings
+markdown: kramdown
+theme: jekyll-theme-cayman
+plugins:
+  - jekyll-feed
+
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.
+# exclude:
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
