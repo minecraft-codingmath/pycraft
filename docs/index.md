@@ -2,6 +2,7 @@
 title: Pycraft
 layout: default
 subtitle: Python & Minecraft for Coding Education
+
 ---
 
 # Pycraft
@@ -42,4 +43,4 @@ for _ in range(BLOCK_COUNT):
 
 ### 실행 모습
 
-![Screenshot](https://i.imgur.com/XWzYADN.png)
+![Imgur](https://i.imgur.com/NsCBP4Z.png)
