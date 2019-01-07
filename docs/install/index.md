@@ -1,25 +1,63 @@
 ---
 layout: page
 
+
 ---
 
-# 설치 방법
+# 튜토리얼
 
-## Windows
+## 1. 압축 파일 다운로드
 
-### 1. 파이썬과 Spyder 설치
+[이 링크](https://example.com)에서 압축파일을 다운로드한 뒤, 압축을 푸세요.
 
-[파이썬 웹사이트](https://www.python.org/)에서 파이썬 Installer를 다운로드하여 설치합니다. 이때 스크린샷과 달리 `[Add Python 3.7 to PATH]`는 체크해 주세요.
+## 2. 실행
 
-![Installer](https://i.imgur.com/FYiMYgU.png)
+실행하면, 다음과 같은 창을 볼 수 있습니다.
 
-### 2. Pycraft 설치
+## 3. 코드 작성 & 실행
 
-명령 프롬프트를 열고 다음 명령어를 입력한 후, `[Enter]`를 누르세요.
+우선은 가장 간단하게, 랜덤한 위치에 블록을 놓는 예제를 보여 드리겠습니다.
 
+```python
+"""
+random_blocks.py -- add randomly placed blocks in the world.
+
+This script generates 1000 (default value) blocks in x, z range -50..50,
+and y range 0..50.
+
+"""
+
+from craft_api import CraftAPI
+import random
+
+api = CraftAPI()
+random.seed()
+
+BLOCK_COUNT = 1000    # number of blocks to create
+for _ in range(BLOCK_COUNT):
+    x = random.randint(-50, 50)
+    y = random.randint(0, 50)
+    z = random.randint(-50, 50)
+    texture = random.choice(['brick', 'sand', 'grass'])
+    api.add_block((x, y, z), texture)
 ```
-pip install pycraft-snu
-pip install craft-api
-```
 
-z
+위 코드를 왼쪽에 있는 코드 편집기에 입력하세요 (복사&붙여넣기 하셔도 됩니다.)
+
+그리고 나서 Run 버튼을 클릭하시면 오른쪽에 있는 Pycraft 창에서 아래 그림과 같이 코드가 실행되고, 결과가 화면에 보여지는 것을 알수 있습니다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
